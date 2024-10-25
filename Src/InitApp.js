@@ -1,11 +1,9 @@
 import connectDb from "../DB/Connection.js";
-import cors from "cors"
-
+import authRouter from './Modules/Auth/Auth.router.js'
 const initApp = (app, express) => {
     connectDb();
     app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
-    app.use(cors());
+    app.use('/auth', authRouter);
     app.get('*', (req, res, next) => {
         return next(new AppError("page not found", 404));
     });
