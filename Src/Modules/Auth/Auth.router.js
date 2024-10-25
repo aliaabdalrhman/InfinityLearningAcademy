@@ -4,8 +4,6 @@ import * as authController from './Auth.controller.js'
 import { forgotPasswordSchema, loginSchema, registerSchema, sendCodeSchema } from "./Auth.validation.js";
 import validation from "../../Middelware/Validation.js";
 
-
-
 const router = Router();
 router.post('/register', asyncHandler(validation(registerSchema)), asyncHandler(authController.register));
 router.get('/confirmEmail/:token', asyncHandler(authController.confirmEmail));
