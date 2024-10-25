@@ -43,7 +43,7 @@ const userSchema = new Schema({
     role: {
         type: String,
         enum: ['SuperAdmin','Admin', 'Instructor','Student'],
-        default: 'User'
+        default: 'Student'
     },
     sendCode: {
         type: String,
