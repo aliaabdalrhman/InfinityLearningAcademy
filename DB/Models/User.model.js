@@ -7,7 +7,8 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -21,10 +22,6 @@ const userSchema = new Schema({
     },
     address: {
         type: String
-    },
-    isDeleted: {
-        type: Boolean,
-        default: false
     },
     confirmEmail: {
         type: Boolean,

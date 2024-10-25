@@ -2,11 +2,11 @@ import jwt from 'jsonwebtoken'
 import { AppError } from '../../GlobalError.js';
 import userModel from '../../DB/Models/User.model.js';
 
-export const roles={
-    superAdmin:'SuperAdmin',
-    admin:'Admin',
-    instructor:'Instructor',
-    student:'Student',
+export const roles = {
+    superAdmin: 'SuperAdmin',
+    admin: 'Admin',
+    instructor: 'Instructor',
+    student: 'Student',
 }
 
 export const auth = (accessRole = []) => {
