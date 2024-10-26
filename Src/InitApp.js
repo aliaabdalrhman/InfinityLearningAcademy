@@ -1,11 +1,17 @@
 import connectDb from "../DB/Connection.js";
-import cors from "cors"
+import cors from "cors";
+import authRouter from './Modules/Auth/Auth.router.js'
+import adminRouter from './Modules/Admin/Admin.router.js'
+import categoryRouter from './Modules/Categories/Category.router.js';
 
 const initApp = (app, express) => {
     connectDb();
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cors());
+    app.use('/auth', authRouter);
+    app.use('/admin', adminRouter);
+    app.use('/categories', categoryRouter);
     app.get('*', (req, res, next) => {
         return next(new AppError("page not found", 404));
     });
