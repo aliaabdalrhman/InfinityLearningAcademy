@@ -12,7 +12,11 @@ export const registerSchema = {
         password: generalFields.password,
         cpassword: joi.valid(joi.ref('password')).required().messages({
             'any.only': 'passwords must match'
-        })
+        }),
+        role: joi.string().valid('Instructor', 'Student').required().messages({
+            'any.only': 'role must be either Instructor or Student ',
+            'string.empty': 'role is required'
+        }),
     })
 }
 

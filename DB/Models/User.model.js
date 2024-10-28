@@ -39,8 +39,9 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['SuperAdmin','Admin', 'Instructor','Student'],
-        default: 'Student'
+        enum: ['SuperAdmin', 'Admin', 'Instructor', 'Student'],
+        default: 'Student',
+        required: true
     },
     sendCode: {
         type: String,

@@ -7,14 +7,14 @@ import { sendEmail } from "../../Utils/SendEmail.js";
 import { customAlphabet } from 'nanoid/non-secure'
 
 export const register = async (req, res, next) => {
-    const { userName, email, password, cpassword } = req.body;
+    const { userName, email, password, cpassword, role } = req.body;
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
         return next(new AppError("Email already exists", 409));
     }
     const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUND));
-    await userModel.create({ userName, email, password: hashedPassword });
-    const token = jwt.sign({ email }, process.env.LOGINSIGNATURE, { expiresIn: '24h' });
+    await userModel.create({ userName, email, password: hashedPassword, role });
+    const token = jwt.sign({ email, role }, process.env.LOGINSIGNATURE, { expiresIn: '24h' });
     const html = `
          <!DOCTYPE html>
          <html lang="en">
