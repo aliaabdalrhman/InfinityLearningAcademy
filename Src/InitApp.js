@@ -2,6 +2,7 @@ import connectDb from "../DB/Connection.js";
 import authRouter from './Modules/Auth/Auth.router.js'
 import adminRouter from './Modules/Admin/Admin.router.js'
 import categoryRouter from './Modules/Categories/Category.router.js';
+import courseRouter from './Modules/Courses/Course.router.js';
 
 const initApp = (app, express) => {
     connectDb();
@@ -9,6 +10,7 @@ const initApp = (app, express) => {
     app.use('/auth', authRouter);
     app.use('/admin', adminRouter);
     app.use('/categories', categoryRouter);
+    app.use('/courses', courseRouter);
     app.get('*', (req, res, next) => {
         return next(new AppError("page not found", 404));
     });

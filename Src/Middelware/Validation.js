@@ -20,7 +20,7 @@ export const generalFields = {
         'string.max': 'name cannot be more than 20 characters long'
     }),
     status: joi.string().valid('Active', 'InActive').messages({
-        'any.only': 'status must be either Active or InActive ',
+        'any.only': 'status must be either Active or InActive',
         'string.empty': 'status is required'
     }),
 }

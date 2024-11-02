@@ -17,12 +17,12 @@ const categorySchema = new Schema({
         type: Object,
     },
     createdBy: {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'User',
         required: true
     },
     updatedBy: {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'User'
     },
     status: {
