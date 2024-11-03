@@ -94,3 +94,18 @@ export const getInActiveCourses = async (req, res, next) => {
     return next(new AppSuccess("success", 200, { courses }));
 }
 
+export const getCourseDetails = async (req, res, next) => {
+    const { id } = req.params;
+    const course = await CourseModel.findById(id).populate([
+        {
+            path: 'createdBy',
+            select: 'userName'
+        },
+    ]);
+    if (!course) {
+        return next(new AppError('Invalid course', 404));
+    }
+    course.image = course.image.secure_url;
+    return next(new AppSuccess("success", 200, { course }));
+}
+

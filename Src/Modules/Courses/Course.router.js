@@ -4,11 +4,12 @@ import { auth } from "../../Middelware/Auth.js";
 import { asyncHandler } from "../../Utils/CatchError.js";
 import fileUpload, { fileType } from "../../Utils/Multur.js";
 import validation from "../../Middelware/Validation.js";
-import { assignInstructorSchema, createCourseSchema } from "./Course.validation.js";
+import { assignInstructorSchema, createCourseSchema, getCourseDetailsSchema } from "./Course.validation.js";
 import { endPoints } from "./Course.role.js";
 
 
 const router = Router();
+
 router.post('/', fileUpload(fileType.image).single('image'),
     asyncHandler(auth(endPoints.create)),
     asyncHandler(validation(createCourseSchema)),
@@ -29,5 +30,8 @@ router.get('/active',
 router.get('/inActive',
     asyncHandler(auth(endPoints.get)),
     asyncHandler(courseController.getInActiveCourses));
+
+router.get('/:id', validation(getCourseDetailsSchema),
+    asyncHandler(courseController.getCourseDetails));
 
 export default router;

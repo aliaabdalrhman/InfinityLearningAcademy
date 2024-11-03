@@ -23,3 +23,8 @@ export const assignInstructorSchema = {
     })
 }
 
+export const getCourseDetailsSchema = {
+    params: joi.object({
+        id: generalFields.id,
+    })
+}
