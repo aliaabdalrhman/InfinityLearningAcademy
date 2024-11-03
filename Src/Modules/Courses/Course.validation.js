@@ -10,6 +10,16 @@ export const createCourseSchema = {
         level: joi.string().valid('Beginner', 'Intermediate', 'Advanced').messages({
             'any.only': 'status must be either Beginner ,Intermediate or Advanced',
             'string.empty': 'status is required'
-        }),  
+        }),
     })
 }
+
+export const assignInstructorSchema = {
+    body: joi.object({
+        instructorId: generalFields.id
+    }),
+    params: joi.object({
+        courseId: generalFields.id
+    })
+}
+

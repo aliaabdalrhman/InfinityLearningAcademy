@@ -4,6 +4,7 @@ import { AppError } from "../../../GlobalError.js";
 import cloudinary from "../../Utils/Cloudinary.js";
 import { AppSuccess } from "../../../GlobalSuccess.js";
 import categoryModel from "../../../DB/Models/Category.model.js";
+import userModel from "../../../DB/Models/User.model.js";
 
 export const createCourse = async (req, res, next) => {
     const name = req.body.name.toLowerCase();
@@ -35,4 +36,27 @@ export const createCourse = async (req, res, next) => {
         level
     });
     return next(new AppSuccess("success", 201));
+}
+
+export const assignInstructor = async (req, res, next) => {
+    const { courseId } = req.params;
+    const { instructorId } = req.body;
+    const course = await CourseModel.findById(courseId);
+    if (!course) {
+        return next(new AppError("Course not found", 404));
+    }
+    const instructor = await userModel.findById(instructorId);
+    if (!instructor) {
+        return next(new AppError("Instructor not found", 404));
+    }
+    else if (instructor.role !== 'Instructor') {
+        return next(new AppError("user is not an instructor", 404));
+    }
+    if (course.instructor && course.instructor.toString() === instructorId) {
+        return next(new AppError("Instructor is already assigned to this course", 400));
+    }
+    course.instructor = instructorId;
+    await course.save();
+    course.image = course.image.secure_url;
+    return next(new AppSuccess("success", 201, { course }));
 }
