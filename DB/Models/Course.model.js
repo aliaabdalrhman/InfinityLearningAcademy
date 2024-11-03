@@ -42,6 +42,11 @@ const courseSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    status: {
+        type: String,
+        enum: ['Active', 'InActive'],
+        default: 'Active'
+    },
     slug: {
         type: String,
         required: true,

@@ -41,7 +41,6 @@ const userSchema = new Schema({
         type: String,
         enum: ['Active', 'InActive'],
         default: 'Active'
-
     },
     sendCode: {
         type: String,

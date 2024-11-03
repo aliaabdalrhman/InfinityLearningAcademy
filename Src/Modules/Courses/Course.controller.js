@@ -38,7 +38,6 @@ export const createCourse = async (req, res, next) => {
     return next(new AppSuccess("success", 201));
 }
 
-
 export const assignInstructor = async (req, res, next) => {
     const { courseId } = req.params;
     const { instructorId } = req.body;
@@ -59,16 +58,39 @@ export const assignInstructor = async (req, res, next) => {
     course.instructor = instructorId;
     await course.save();
     course.image = course.image.secure_url;
-    return next(new AppSuccess("success", 201, { course }));
+    return next(new AppSuccess("success", 200, { course }));
 }
 
 export const getAllCourses = async (req, res, next) => {
-    let courses = await CourseModel.find().select('name description image level');
+    let courses = await CourseModel.find().select('name description image level status');
     courses = courses.map(course => {
         return {
             ...course.toObject(),
             image: course.image.secure_url
         }
     })
-    return next(new AppSuccess("success", 201, { courses }));
+    return next(new AppSuccess("success", 200, { courses }));
 }
+
+export const getActiveCourses = async (req, res, next) => {
+    let courses = await CourseModel.find({ status: 'Active' }).select('name description image level status');
+    courses = courses.map(course => {
+        return {
+            ...course.toObject(),
+            image: course.image.secure_url
+        }
+    })
+    return next(new AppSuccess("success", 200, { courses }));
+}
+
+export const getInActiveCourses = async (req, res, next) => {
+    let courses = await CourseModel.find({ status: 'InActive' }).select('name description image level status');
+    courses = courses.map(course => {
+        return {
+            ...course.toObject(),
+            image: course.image.secure_url
+        }
+    })
+    return next(new AppSuccess("success", 200, { courses }));
+}
+

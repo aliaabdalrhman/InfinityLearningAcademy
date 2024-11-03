@@ -23,4 +23,11 @@ router.get('/',
     asyncHandler(auth(endPoints.get)),
     asyncHandler(courseController.getAllCourses));
 
+router.get('/active',
+    asyncHandler(courseController.getActiveCourses));
+
+router.get('/inActive',
+    asyncHandler(auth(endPoints.get)),
+    asyncHandler(courseController.getInActiveCourses));
+
 export default router;
