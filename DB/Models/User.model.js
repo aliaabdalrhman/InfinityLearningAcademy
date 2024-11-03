@@ -20,6 +20,12 @@ const userSchema = new Schema({
     phone: {
         type: Number,
     },
+    role: {
+        type: String,
+        enum: ['SuperAdmin', 'Admin', 'Instructor', 'Student'],
+        default: 'Student',
+        required: true
+    },
     address: {
         type: String
     },
