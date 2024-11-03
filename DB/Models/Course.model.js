@@ -18,6 +18,10 @@ const courseSchema = new Schema({
         ref: 'User',
         required: true
     },
+    updatedBy: {
+        type: Types.ObjectId,
+        ref: 'User'
+    },
     instructor: {
         type: Types.ObjectId,
         ref: 'User',

@@ -4,5 +4,5 @@ export const endPoints = {
     create: [roles.superAdmin, roles.admin],
     assignInstructor: [roles.superAdmin, roles.admin],
     get: [roles.superAdmin, roles.admin],
-
+    update: [roles.superAdmin, roles.admin],
 }

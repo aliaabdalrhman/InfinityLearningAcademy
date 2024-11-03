@@ -109,3 +109,30 @@ export const getCourseDetails = async (req, res, next) => {
     return next(new AppSuccess("success", 200, { course }));
 }
 
+export const updateCourse = async (req, res, next) => {
+    const { name, status, description } = req.body;
+    const updatedBy = req.id;
+    const { id } = req.params;
+    let course = await CourseModel.findByIdAndUpdate(id, {
+        name,
+        status,
+        description,
+        updatedBy,
+        slug: slugify(name)
+    },
+        { new: true }).populate([
+            {
+                path: 'createdBy',
+                select: 'userName'
+            },
+            {
+                path: 'updatedBy',
+                select: 'userName'
+            }
+        ]);
+    if (!course) {
+        return next(new AppError('Invalid course', 404));
+    }
+    course.image = course.image.secure_url;
+    return next(new AppSuccess("success", 200, { course }));
+}

@@ -28,3 +28,14 @@ export const getCourseDetailsSchema = {
         id: generalFields.id,
     })
 }
+
+export const updateCourseSchema = {
+    body: joi.object({
+        name: generalFields.name,
+        status: generalFields.status,
+        description: joi.string().min(3).max(100).optional(),
+    }),
+    params: joi.object({
+        id: generalFields.id,
+    })
+}

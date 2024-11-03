@@ -23,6 +23,7 @@ export const generalFields = {
         'any.only': 'status must be either Active or InActive',
         'string.empty': 'status is required'
     }),
+    
 }
 
 const validation = (schema) => {
