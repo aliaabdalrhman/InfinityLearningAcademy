@@ -17,6 +17,10 @@ router.post('/', fileUpload(fileType.image).single('image'),
 router.put('/:courseId/assignInstructor',
     asyncHandler(auth(endPoints.assignInstructor)),
     asyncHandler(validation(assignInstructorSchema)),
-     asyncHandler(courseController.assignInstructor));
+    asyncHandler(courseController.assignInstructor));
+
+router.get('/',
+    asyncHandler(auth(endPoints.get)),
+    asyncHandler(courseController.getAllCourses));
 
 export default router;

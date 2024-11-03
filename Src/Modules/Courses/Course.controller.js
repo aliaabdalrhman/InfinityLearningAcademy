@@ -38,6 +38,7 @@ export const createCourse = async (req, res, next) => {
     return next(new AppSuccess("success", 201));
 }
 
+
 export const assignInstructor = async (req, res, next) => {
     const { courseId } = req.params;
     const { instructorId } = req.body;
@@ -59,4 +60,15 @@ export const assignInstructor = async (req, res, next) => {
     await course.save();
     course.image = course.image.secure_url;
     return next(new AppSuccess("success", 201, { course }));
+}
+
+export const getAllCourses = async (req, res, next) => {
+    let courses = await CourseModel.find().select('name description image level');
+    courses = courses.map(course => {
+        return {
+            ...course.toObject(),
+            image: course.image.secure_url
+        }
+    })
+    return next(new AppSuccess("success", 201, { courses }));
 }
