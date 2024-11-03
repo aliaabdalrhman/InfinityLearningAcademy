@@ -33,8 +33,14 @@ export const updateCourseSchema = {
     body: joi.object({
         name: generalFields.name,
         status: generalFields.status,
-        description: joi.string().min(3).max(100).optional(),
+        description: joi.string().optional(),
     }),
+    params: joi.object({
+        id: generalFields.id,
+    })
+}
+
+export const deleteCourseSchema = {
     params: joi.object({
         id: generalFields.id,
     })

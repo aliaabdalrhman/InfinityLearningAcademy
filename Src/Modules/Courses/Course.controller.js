@@ -136,3 +136,23 @@ export const updateCourse = async (req, res, next) => {
     course.image = course.image.secure_url;
     return next(new AppSuccess("success", 200, { course }));
 }
+
+export const deleteCourse = async (req, res, next) => {
+    const { id } = req.params;
+    let course = await CourseModel.findByIdAndDelete(id).populate([
+        {
+            path: 'createdBy',
+            select: 'userName'
+        },
+        {
+            path: 'updatedBy',
+            select: 'userName'
+        }
+    ]);
+    if (!course) {
+        return next(new AppError('Invalid course', 404));
+    }
+    await cloudinary.uploader.destroy(course.image.public_id);
+    return next(new AppSuccess("success", 200, { course }));
+
+}

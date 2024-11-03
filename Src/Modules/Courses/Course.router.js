@@ -4,7 +4,7 @@ import { auth } from "../../Middelware/Auth.js";
 import { asyncHandler } from "../../Utils/CatchError.js";
 import fileUpload, { fileType } from "../../Utils/Multur.js";
 import validation from "../../Middelware/Validation.js";
-import { assignInstructorSchema, createCourseSchema, getCourseDetailsSchema, updateCourseSchema } from "./Course.validation.js";
+import { assignInstructorSchema, createCourseSchema, deleteCourseSchema, getCourseDetailsSchema, updateCourseSchema } from "./Course.validation.js";
 import { endPoints } from "./Course.role.js";
 
 
@@ -37,5 +37,9 @@ router.get('/:id', validation(getCourseDetailsSchema),
 router.put('/:id', asyncHandler(auth(endPoints.update)),
     validation(updateCourseSchema),
     asyncHandler(courseController.updateCourse));
+
+router.delete('/:id', asyncHandler(auth(endPoints.delete)),
+    validation(deleteCourseSchema),
+    asyncHandler(courseController.deleteCourse));
 
 export default router;
