@@ -22,10 +22,10 @@ const courseSchema = new Schema({
         type: Types.ObjectId,
         ref: 'User'
     },
-    instructor: {
+    instructors: [{
         type: Types.ObjectId,
         ref: 'User',
-    },
+    }],
     duration: {
         type: Number,
         min: 1

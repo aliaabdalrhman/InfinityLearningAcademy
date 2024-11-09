@@ -38,27 +38,29 @@ export const createCourse = async (req, res, next) => {
     return next(new AppSuccess("success", 201));
 }
 
-export const assignInstructor = async (req, res, next) => {
+export const assignInstructors = async (req, res, next) => {
     const { courseId } = req.params;
-    const { instructorId } = req.body;
+    const { instructorIds } = req.body; // تعديل لتستقبل مصفوفة من معرّفات الأساتذة
     const course = await CourseModel.findById(courseId);
     if (!course) {
         return next(new AppError("Course not found", 404));
     }
-    const instructor = await userModel.findById(instructorId);
-    if (!instructor) {
-        return next(new AppError("Instructor not found", 404));
+    for (let instructorId of instructorIds) {
+        const instructor = await userModel.findById(instructorId);
+        if (!instructor) {
+            return next(new AppError(`Instructor with id ${instructorId} not found`, 404));
+        }
+        if (instructor.role !== 'Instructor') {
+            return next(new AppError(`User with id ${instructorId} is not an instructor`, 404));
+        }
+        if (course.instructors && course.instructors.includes(instructorId)) {
+            return next(new AppError(`Instructor with id ${instructorId} is already assigned to this course`, 400));
+        }
     }
-    else if (instructor.role !== 'Instructor') {
-        return next(new AppError("user is not an instructor", 404));
-    }
-    if (course.instructor && course.instructor.toString() === instructorId) {
-        return next(new AppError("Instructor is already assigned to this course", 400));
-    }
-    course.instructor = instructorId;
+    course.instructors = [...new Set([...course.instructors, ...instructorIds])];
     await course.save();
     course.image = course.image.secure_url;
-    return next(new AppSuccess("success", 200, { course }));
+    return next(new AppSuccess("Instructors assigned successfully", 200, { course }));
 }
 
 export const getAllCourses = async (req, res, next) => {

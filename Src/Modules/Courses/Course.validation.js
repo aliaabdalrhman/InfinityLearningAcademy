@@ -12,22 +12,22 @@ export const createCourseSchema = {
             'string.empty': 'status is required'
         }),
     })
-}
+};
 
 export const assignInstructorSchema = {
     body: joi.object({
-        instructorId: generalFields.id
+        instructorIds: joi.array().items(generalFields.id)
     }),
     params: joi.object({
         courseId: generalFields.id
     })
-}
+};
 
 export const getCourseDetailsSchema = {
     params: joi.object({
         id: generalFields.id,
     })
-}
+};
 
 export const updateCourseSchema = {
     body: joi.object({
@@ -38,10 +38,10 @@ export const updateCourseSchema = {
     params: joi.object({
         id: generalFields.id,
     })
-}
+};
 
 export const deleteCourseSchema = {
     params: joi.object({
         id: generalFields.id,
     })
-}
+};

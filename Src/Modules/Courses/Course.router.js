@@ -6,19 +6,21 @@ import fileUpload, { fileType } from "../../Utils/Multur.js";
 import validation from "../../Middelware/Validation.js";
 import { assignInstructorSchema, createCourseSchema, deleteCourseSchema, getCourseDetailsSchema, updateCourseSchema } from "./Course.validation.js";
 import { endPoints } from "./Course.role.js";
-
+import lessonRouter from '../Lessons/Lesson.router.js'
 
 const router = Router();
+
+router.use('/:courseId/lessons', lessonRouter);
 
 router.post('/', fileUpload(fileType.image).single('image'),
     asyncHandler(auth(endPoints.create)),
     asyncHandler(validation(createCourseSchema)),
     asyncHandler(courseController.createCourse));
 
-router.put('/:courseId/assignInstructor',
-    asyncHandler(auth(endPoints.assignInstructor)),
+router.put('/:courseId/assignInstructors',
+    asyncHandler(auth(endPoints.assignInstructors)),
     asyncHandler(validation(assignInstructorSchema)),
-    asyncHandler(courseController.assignInstructor));
+    asyncHandler(courseController.assignInstructors));
 
 router.get('/',
     asyncHandler(auth(endPoints.get)),
