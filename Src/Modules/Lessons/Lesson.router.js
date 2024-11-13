@@ -9,6 +9,7 @@ import {
     deleteLessonSchema,
     getLessonDetailsSchema,
     getLessonsForSpecificInstructorSchema,
+    updateLessonCompletionSchema,
     updateLessonSchema
 } from "./Lesson.validation.js";
 
@@ -37,5 +38,9 @@ router.delete('/:lessonId', asyncHandler(auth(endPoints.delete)),
     asyncHandler(validation(deleteLessonSchema)),
     asyncHandler(lessonController.deleteLesson));
 
+router.patch('/:lessonId/complete', asyncHandler(auth(endPoints.updateLessonCompletion)),
+    asyncHandler(validation(updateLessonCompletionSchema)),
+    asyncHandler(lessonController.updateLessonCompletion)
+);
 
 export default router;

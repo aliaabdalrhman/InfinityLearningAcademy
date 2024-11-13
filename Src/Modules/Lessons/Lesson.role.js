@@ -4,5 +4,5 @@ export const endPoints = {
     create: [roles.superAdmin, roles.admin],
     update: [roles.superAdmin, roles.admin],
     delete: [roles.superAdmin, roles.admin],
-
+    updateLessonCompletion: [roles.student]
 }

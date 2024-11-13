@@ -4,13 +4,21 @@ import { auth } from "../../Middelware/Auth.js";
 import { asyncHandler } from "../../Utils/CatchError.js";
 import fileUpload, { fileType } from "../../Utils/Multur.js";
 import validation from "../../Middelware/Validation.js";
-import { assignInstructorSchema, createCourseSchema, deleteCourseSchema, getCourseDetailsSchema, updateCourseSchema } from "./Course.validation.js";
+import {
+    assignInstructorSchema,
+    createCourseSchema,
+    deleteCourseSchema,
+    getCourseDetailsSchema,
+    updateCourseSchema
+} from "./Course.validation.js";
 import { endPoints } from "./Course.role.js";
 import lessonRouter from '../Lessons/Lesson.router.js'
+import enrollmentRouter from '../Enrollment/Enrollment.router.js'
 
 const router = Router();
 
 router.use('/:courseId/lessons', lessonRouter);
+router.use('/:courseId/enrollment', enrollmentRouter);
 
 router.post('/', fileUpload(fileType.image).single('image'),
     asyncHandler(auth(endPoints.create)),

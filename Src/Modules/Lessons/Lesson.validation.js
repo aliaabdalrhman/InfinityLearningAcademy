@@ -51,3 +51,10 @@ export const deleteLessonSchema = {
         lessonId: generalFields.id
     })
 };
+
+export const updateLessonCompletionSchema = {
+    params: joi.object({
+        courseId: generalFields.id,
+        lessonId: generalFields.id,
+    })
+};

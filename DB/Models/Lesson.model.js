@@ -52,17 +52,13 @@ const lessonSchema = new Schema({
     link: {
         type: String,
         required: true,
-        uniqe: true
+        unique: true
     },
     slug: {
         type: String,
         required: true,
         unique: true
     },
-    attendees: [{
-        type: Types.ObjectId,
-        ref: 'User'
-    }]
 }, {
     timestamps: true
 });
