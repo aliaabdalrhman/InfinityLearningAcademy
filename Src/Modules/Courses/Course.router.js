@@ -14,11 +14,12 @@ import {
 import { endPoints } from "./Course.role.js";
 import lessonRouter from '../Lessons/Lesson.router.js'
 import enrollmentRouter from '../Enrollment/Enrollment.router.js'
-
+import reviewRouter from '../CourseReviews/Review.router.js'
 const router = Router();
 
 router.use('/:courseId/lessons', lessonRouter);
 router.use('/:courseId/enrollment', enrollmentRouter);
+router.use('/:courseId/reviews', reviewRouter);
 
 router.post('/', fileUpload(fileType.image).single('image'),
     asyncHandler(auth(endPoints.create)),

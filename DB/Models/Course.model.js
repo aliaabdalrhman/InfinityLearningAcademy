@@ -51,13 +51,25 @@ const courseSchema = new Schema({
         enum: ['Active', 'InActive'],
         default: 'Active'
     },
+    averageRating: {
+        type: Number,
+        default: 0
+    },
     slug: {
         type: String,
         required: true,
         unique: true
     },
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+});
+
+courseSchema.virtual('review', {
+    ref: 'CourseReview',
+    localField: '_id',
+    foreignField: 'courseId'
 });
 
 const CourseModel = model('Course', courseSchema);

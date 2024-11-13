@@ -59,10 +59,39 @@ const lessonSchema = new Schema({
         required: true,
         unique: true
     },
+    reviews: [
+        {
+            studentId: {
+                type: Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            rating: {
+                type: Number,
+                min: 1,
+                max: 5,
+                required: true
+            },
+            comment: {
+                type: String,
+                required: true
+            }
+        }
+    ],
+    averageRating: {
+        type: Number,
+        default: 0
+    }
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
 });
 
-
+lessonSchema.virtual('review', {
+    ref: 'LessonReview',
+    localField: '_id',
+    foreignField: 'lessonId'
+});
 const LessonModel = model('Lesson', lessonSchema);
 export default LessonModel;

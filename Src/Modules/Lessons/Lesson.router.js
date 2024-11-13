@@ -12,8 +12,11 @@ import {
     updateLessonCompletionSchema,
     updateLessonSchema
 } from "./Lesson.validation.js";
+import reviewRouter from '../LessonReviews/Review.router.js'
 
 const router = Router({ mergeParams: true });
+
+router.use('/:lessonId/reviews', reviewRouter);
 
 router.post('/', asyncHandler(auth(endPoints.create)),
     validation(createLessonSchema),

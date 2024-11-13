@@ -64,7 +64,7 @@ export const assignInstructors = async (req, res, next) => {
 }
 
 export const getAllCourses = async (req, res, next) => {
-    let courses = await CourseModel.find().select('name description image level status');
+    let courses = await CourseModel.find().select('name description image level averageRating status');
     courses = courses.map(course => {
         return {
             ...course.toObject(),
@@ -75,7 +75,7 @@ export const getAllCourses = async (req, res, next) => {
 }
 
 export const getActiveCourses = async (req, res, next) => {
-    let courses = await CourseModel.find({ status: 'Active' }).select('name description image level status');
+    let courses = await CourseModel.find({ status: 'Active' }).select('name description image averageRating level status');
     courses = courses.map(course => {
         return {
             ...course.toObject(),
@@ -86,7 +86,7 @@ export const getActiveCourses = async (req, res, next) => {
 }
 
 export const getInActiveCourses = async (req, res, next) => {
-    let courses = await CourseModel.find({ status: 'InActive' }).select('name description image level status');
+    let courses = await CourseModel.find({ status: 'InActive' }).select('name description image averageRating level status');
     courses = courses.map(course => {
         return {
             ...course.toObject(),
@@ -103,9 +103,20 @@ export const getCourseDetails = async (req, res, next) => {
             path: 'createdBy',
             select: 'userName'
         },
+        {
+            path: 'instructors',
+            select: 'userName'
+        },
+        {
+            path: 'review',
+            populate: {
+                path: 'studentId',
+                select: 'userName',
+            }
+        }
     ]);
     if (!course) {
-        return next(new AppError('Invalid course', 404));
+        return next(new AppError('course not found', 404));
     }
     course.image = course.image.secure_url;
     return next(new AppSuccess("success", 200, { course }));
@@ -133,7 +144,7 @@ export const updateCourse = async (req, res, next) => {
             }
         ]);
     if (!course) {
-        return next(new AppError('Invalid course', 404));
+        return next(new AppError('course not found', 404));
     }
     course.image = course.image.secure_url;
     return next(new AppSuccess("success", 200, { course }));
@@ -152,7 +163,7 @@ export const deleteCourse = async (req, res, next) => {
         }
     ]);
     if (!course) {
-        return next(new AppError('Invalid course', 404));
+        return next(new AppError('course not found', 404));
     }
     await cloudinary.uploader.destroy(course.image.public_id);
     return next(new AppSuccess("success", 200, { course }));

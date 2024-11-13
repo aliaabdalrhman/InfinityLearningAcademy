@@ -61,7 +61,7 @@ export const getLessons = async (req, res, next) => {
     if (!course) {
         return next(new AppError("Course not found", 404));
     }
-    const lessons = await LessonModel.find({ courseId }).select('title description startTime endTime link').populate([
+    const lessons = await LessonModel.find({ courseId }).select('title description averageRating startTime endTime link').populate([
         {
             path: "instructorId",
             select: "userName"
@@ -82,7 +82,7 @@ export const getLessonsForSpecificInstructor = async (req, res, next) => {
     if (!course) {
         return next(new AppError("Course not found", 404));
     }
-    const lessons = await LessonModel.find({ courseId, instructorId }).select('title description startTime endTime link').populate([
+    const lessons = await LessonModel.find({ courseId, instructorId }).select('title description averageRating startTime endTime link').populate([
         {
             path: "instructorId",
             select: "userName"
@@ -118,8 +118,14 @@ export const getLessonDetails = async (req, res, next) => {
         {
             path: 'updatedBy',
             select: 'userName'
+        },
+        {
+            path: 'review',
+            populate: {
+                path: 'studentId',
+                select: 'userName',
+            }
         }
-
     ]);
     if (!lesson) {
         return next(new AppError("Lesson not found", 404));
