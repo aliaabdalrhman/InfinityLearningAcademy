@@ -8,7 +8,7 @@ import userModel from "../../../DB/Models/User.model.js";
 
 export const createCourse = async (req, res, next) => {
     const name = req.body.name.toLowerCase();
-    const { description, categories, level } = req.body;
+    const { description, categories, level,duration } = req.body;
     let parsedCategories;
     if (categories) {
         parsedCategories = JSON.parse(categories);
@@ -33,7 +33,8 @@ export const createCourse = async (req, res, next) => {
         slug: slugify(name),
         description,
         categories: parsedCategories,
-        level
+        level,
+        duration
     });
     return next(new AppSuccess("success", 201));
 }

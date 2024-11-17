@@ -5,7 +5,7 @@ export const createCourseSchema = {
     body: joi.object({
         name: generalFields.name,
         description: joi.string().optional(),
-        price: joi.number().optional(),
+        duration:joi.number().required(),
         categories: joi.string().required(),
         level: joi.string().valid('Beginner', 'Intermediate', 'Advanced').messages({
             'any.only': 'status must be either Beginner ,Intermediate or Advanced',

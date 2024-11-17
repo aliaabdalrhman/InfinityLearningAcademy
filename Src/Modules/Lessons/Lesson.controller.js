@@ -29,6 +29,7 @@ export const createLesson = async (req, res, next) => {
     if (existingorderLesson) {
         return next(new AppError("Lesson with this order already exists for this instructor", 400));
     }
+
     const endTime = new Date(startTime);
     endTime.setMinutes(endTime.getMinutes() + duration);
     const conflictingLesson = await LessonModel.findOne({

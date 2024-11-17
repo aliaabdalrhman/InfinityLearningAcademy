@@ -21,8 +21,10 @@ export const auth = (accessRole = []) => {
             return next(new AppError("Invalid authorization", 401));
         }
         else {
-            const user = await userModel.findById(decoded.id).select("id role");
+            const user = await userModel.findById(decoded.id).select("id userName role");
             req.id = user.id;
+            req.userName = user.userName;
+            req.email = user.email;
             if (!accessRole.includes(user.role)) {
                 return next(new AppError("Access denied", 403));
             };

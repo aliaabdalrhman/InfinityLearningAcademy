@@ -28,7 +28,10 @@ const courseSchema = new Schema({
     }],
     duration: {
         type: Number,
-        min: 1
+        min: 1,
+        required: true
+
+
     },
     categories: [
         {
