@@ -3,15 +3,18 @@ import authRouter from './Modules/Auth/Auth.router.js'
 import adminRouter from './Modules/Admin/Admin.router.js'
 import categoryRouter from './Modules/Categories/Category.router.js';
 import courseRouter from './Modules/Courses/Course.router.js';
-import certificationRouter from './Modules/Certification/Certification.router.js'
+import certificationRouter from './Modules/Certification/Certification.router.js';
+import cors from 'cors';
+
 const initApp = (app, express) => {
     connectDb();
     app.use(express.json());
+    app.use(cors());
     app.use('/auth', authRouter);
     app.use('/admin', adminRouter);
     app.use('/categories', categoryRouter);
     app.use('/courses', courseRouter);
-    app.use('/certifications',certificationRouter)
+    app.use('/certifications', certificationRouter);
     app.get('*', (req, res, next) => {
         return next(new AppError("page not found", 404));
     });

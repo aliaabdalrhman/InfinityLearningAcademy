@@ -57,7 +57,6 @@ const lessonSchema = new Schema({
     slug: {
         type: String,
         required: true,
-        unique: true
     },
     reviews: [
         {
@@ -93,5 +92,8 @@ lessonSchema.virtual('review', {
     localField: '_id',
     foreignField: 'lessonId'
 });
+
+lessonSchema.index({ slug: 1, courseId: 1, instructorId: 1 }, { unique: true });
+
 const LessonModel = model('Lesson', lessonSchema);
 export default LessonModel;
